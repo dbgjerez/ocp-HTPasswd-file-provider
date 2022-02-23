@@ -7,4 +7,19 @@ TMP_FILE=.users.tmp
 echo "Admin user: $CLUSTER_ADMIN_USER"
 echo "OCP: $OCP_API"
 
+echo "--> OCP login"
 oc login -u $CLUSTER_ADMIN_USER $OCP_API
+
+echo "--> Users to create: $(cat $PATH_TO_USERS_FILE | wc -l)"
+cat $PATH_TO_USERS_FILE | while read line ;
+do
+    user=`echo $line | awk -F# '{print $1}'`
+    pass=`echo $line | awk -F# '{print $2}'`
+    # add user to htpasswd file
+    htpasswd -nbm $user $pass  >> $TMP_FILE
+done
+
+echo "--> Users created: $(grep -c '^$' $TMP_FILE)"
+
+echo "--> Deleting temporal data"
+rm $TMP_FILE
