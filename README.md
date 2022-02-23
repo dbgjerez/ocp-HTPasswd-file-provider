@@ -17,6 +17,19 @@ dborrego@redhat.com#change1234
 ``` 
 
 # Script
+> :warning: This version works with an existing OAuth called **cluster** and existing **htpasswd secret** with htpasswd file content.
+```zsh
+❯ oc get OAuth                                                                   
+NAME      AGE
+cluster   143m
+```
+```zsh
+❯ oc get secret htpasswd -n openshift-config                                         
+       
+NAME       TYPE     DATA   AGE
+htpasswd   Opaque   1      102m
+```
+
 1. Login as admin 
 2. Reads user list
 3. Retrieves existing htpasswd file
