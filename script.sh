@@ -21,5 +21,10 @@ done
 
 echo "--> Users created: $(grep -c '^$' $TMP_FILE)"
 
+echo "--> Creating OCP secret"
+oc create secret generic htpass-secret --from-file=htpasswd=$TMP_FILE -n openshift-config
+
 echo "--> Deleting temporal data"
 rm $TMP_FILE
+
+
