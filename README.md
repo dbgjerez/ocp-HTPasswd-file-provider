@@ -9,11 +9,13 @@ The motivation is to create a project for each user and became itself admin.
 
 # Configuration
 ## User lists
-A list of users, separating each user in a line and username and password by '#'.
+A list of users, separating each user in a line. 
+
+Each line is composed by 3 parameters separated by '#': username, password and role to assign the user.
 
 ```bash
 ❯ cat users.list 
-dborrego@redhat.com#change1234
+dborrego@redhat.com#change1234#admin
 ``` 
 
 # Script
@@ -36,6 +38,8 @@ htpasswd   Opaque   1      102m
 4. Append new users to htpasswd
 5. Apply the temporal file
 6. Creates a new OAuth provider
+7. Creates a project for the user, called $user-ns
+8. Assign the role to the user on the new project
 
 ## Example
 ```bash

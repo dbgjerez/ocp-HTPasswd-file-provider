@@ -28,11 +28,23 @@ done
 echo "--> Users created: $(grep -c $COUNT_REGEX $TMP_FILE)"
 
 echo "--> Creating OCP secret"
-oc create secret generic htpasswd \
-   --from-file=htpasswd=$TMP_FILE \
-   --dry-run=client \
-   -o yaml \
-   -n openshift-config | oc replace -f -
+#oc create secret generic htpasswd \
+#   --from-file=htpasswd=$TMP_FILE \
+#   --dry-run=client \
+#   -o yaml \
+#   -n openshift-config | oc replace -f -
+
+echo "--> Creating project and roles"
+cat $PATH_TO_USERS_FILE | while read line ;
+do
+    user=`echo $line | awk -F# '{print $1}'`
+    role=`echo $line | awk -F# '{print $3}'`
+    ns=$user-ns
+    echo "  --> Creating project [$ns]"
+    #oc new-project $ns
+    echo "  --> Role $role to user $user assigned"
+    #oc adm policy add-role-to-user $role $user -n $ns
+done
 
 echo "--> Deleting temporal data"
 rm $TMP_FILE
