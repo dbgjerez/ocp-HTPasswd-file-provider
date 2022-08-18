@@ -6,7 +6,43 @@ The motivation is to create a project for each user and became itself admin.
 
 # Prerequisites
 * OC cli
-* HTPasswd 
+* HTPasswd
+
+## Creating a OAuth HTPasswd provider
+This point is only if you don't have an OAuth server configured. 
+
+The steps are:
+1. Create the secret that will contain the users
+2. Create the OAuth server instance
+
+The folder ```crd``` contains the following file to create the provider. It's very important, the ```htpasswd.fileData.name``` entry that represents the name of the secret file. 
+
+```yaml
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+  - name: localusers 
+    mappingMethod: claim 
+    type: HTPasswd
+    htpasswd:
+      fileData:
+        name: htpass-secret
+```
+
+Create the secret file without users: 
+```zsh
+oc create secret generic htpasswd \
+   --from-file=htpasswd=crd/localusers \
+   -n openshift-config
+```
+
+Now, create the OAuth:
+```zsh
+oc create -f crd/OAuth.yaml
+```
 
 # Configuration
 ## User lists
@@ -19,11 +55,13 @@ dborrego@redhat.com#change1234
 
 # Script
 > :warning: This version works with an existing OAuth called **cluster** and existing **htpasswd secret** with htpasswd file content.
+
 ```zsh
 ❯ oc get OAuth                                                                   
 NAME      AGE
 cluster   143m
 ```
+
 ```zsh
 ❯ oc get secret htpasswd -n openshift-config                                         
        
@@ -36,7 +74,6 @@ htpasswd   Opaque   1      102m
 3. Retrieves existing htpasswd file
 4. Append new users to htpasswd
 5. Apply the temporal file
-6. Creates a new OAuth provider
 
 ## Example
 ```bash
