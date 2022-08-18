@@ -9,7 +9,7 @@ The motivation is to create a project for each user and became itself admin.
 * OC cli
 * HTPasswd
 
-## Creating a OAuth HTPasswd provider
+## Create a OAuth HTPasswd provider if not exists
 This point is only if you don't have an OAuth server configured. 
 
 The steps are:
