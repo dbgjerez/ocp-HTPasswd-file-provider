@@ -22,7 +22,7 @@ do
     user=`echo $line | awk -F# '{print $1}'`
     pass=`echo $line | awk -F# '{print $2}'`
     # add user to htpasswd file
-    htpasswd -nbm $user $pass  >> $TMP_FILE
+    htpasswd -nbB $user $pass  >> $TMP_FILE
 done
 
 echo "--> Users created: $(grep -c $COUNT_REGEX $TMP_FILE)"
