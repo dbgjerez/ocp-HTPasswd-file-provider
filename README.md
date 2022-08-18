@@ -2,6 +2,7 @@
 The motivation is to create a project for each user and became itself admin.
 
 > :warning: This repository has been checked in OCP 4.10
+
 > :warning: ```script.sh``` supposes that you have created previously the htpasswd secret and the OAuth server. 
 
 # Prerequisites
