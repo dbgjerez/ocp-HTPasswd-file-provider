@@ -1,14 +1,12 @@
 # OCP User configuration
-
-> :warning: **Be very careful** This repository is used to create a new user provider **only for testing**.
+The motivation is to create a project for each user and became itself admin.
 
 > :warning: This repository has been checked in OCP 4.10
-
-The motivation is to create a project for each user and became itself admin.
+> :warning: ```script.sh``` supposes that you have created previously the htpasswd secret and the OAuth server. 
 
 # Prerequisites
 * OC cli
-* htpasswd utility
+* HTPasswd 
 
 # Configuration
 ## User lists
